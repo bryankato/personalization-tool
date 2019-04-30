@@ -1,0 +1,20 @@
+manifest.json
+content script
+  content.js
+background script : to add button
+  background.js
+
+chrome API
+  chrome browser browserAction
+  messaging API
+pop up
+
+
+jQuery.ajax(
+{
+  method:'GET',
+  url:'https://athleta.gap.com/resources/personalization/v1/CE84D4D0E97411E8BBAC15777EFBEC85?originPath=/&mdsId=1&referrer=',
+  dataType:'json'
+}).done(function(e){
+  console.log(e.responseJSON);
+});

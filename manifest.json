@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "User Profile details",
+  "version":"1.3",
+  "permissions": [
+    "*://*.gap.com/*",
+    "activeTab",
+    "storage",
+    "background",
+    "webRequest"
+  ],
+  "content_scripts":[
+    {
+      "matches":["<all_urls>"],
+      "js":["content.js"]
+    }
+  ],
+  "background": {
+    "persistent": true,
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_icon": "ct.png",
+    "default_popup": "popup.html",
+    "default_title": "user profile"
+  }
+}
