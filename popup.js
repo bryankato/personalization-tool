@@ -39,55 +39,49 @@
 
 // Function to create tables based on array input
 function createTable(id,arr){
-  var table = document.createElement('table');
+  var table = document.getElementById(id);
   for (var i = 0; i < arr.length; i++){
-    var tr = document.createElement('tr');
-    var td1 = document.createElement('td');
-    var td2 = document.createElement('td');
-    var td3 = document.createElement('td');
+    var row = table.insertRow(i+1);
     var text1 ='';
     var text2 ='';
     var text3 ='';
     if(id == 'pas-data'){
-      text1 = document.createTextNode(arr[i].AttributeName);
-      text2 = document.createTextNode(arr[i].AttributeValue);
+      text1 = arr[i].AttributeName;
+      text2 = arr[i].AttributeValue;
     } else if(id == 'ecomid-data'){
-      text1 = document.createTextNode('Ecomm Id');
-      text2 = document.createTextNode(arr[i]);
+      text1 = 'Ecomm Id';
+      text2 = arr[i];
     } else if(id == 'ca-data'){
-      text1 = document.createTextNode(arr[i][0]);
-      text2 = document.createTextNode(arr[i][1]);
+      text1 = arr[i][0];
+      text2 = arr[i][1];
     } else if(id == 'optly-data'){
       var arrSplit = arr[i].split(":");
-      text1 = document.createTextNode(arrSplit[0]);
+      text1 = arrSplit[0];
       // Check for experiment
       if (arrSplit.length > 2) {
-        text2 = document.createTextNode(arrSplit[1]);
-        text3 = document.createTextNode(arrSplit[2]);
+        text2 = arrSplit[1];
+        text3 = arrSplit[2];
       // If no experiment vallue, print variation
       } else {
-        text2 = document.createTextNode("n/a");
-        text3 = document.createTextNode(arrSplit[1]);
+        text2 = "n/a";
+        text3 = arrSplit[1];
       }
     } else {
-      text1 = document.createTextNode(arr[i]);
+      text1 = arr[i];
     }
-    td1.appendChild(text1);
-    tr.appendChild(td1);
+    var cell1 = row.insertCell(0);
+    cell1.innerText = text1;
     // if text 2 doesn't exist don't append td2
     if (text2 != "") {
-      td2.appendChild(text2);
-      tr.appendChild(td2);
+      var cell2 = row.insertCell(1);
+      cell2.innerText = text2;
     }
     // if text 3 doesn't exist don't append td3
     if (text3 != "") {
-      td3.appendChild(text3);
-      tr.appendChild(td3);
+      var cell3 = row.insertCell(2);
+      cell3.innerText = text3;
     }
-    table.appendChild(tr);
   }
-  var parent = document.getElementById(id);
-  parent.appendChild(table);
 }
 
 // Gets data from window and calls table generating function

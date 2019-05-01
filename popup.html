@@ -24,6 +24,9 @@
       tr:nth-child(even) {
         background-color: #fff;
       }
+      tr:nth-child(1) > td {
+        font-weight: bold;
+      }
       td {
         border: 1px solid #eee;
         padding: 3px 10px;
@@ -62,23 +65,58 @@
     </section>
     <section>
       <h3>Customer ID</h3>
-      <div id="ecomid-data"></div>
+      <div>
+        <table id="ecomid-data">
+          <tr>
+            <td>ID Type</td>
+            <td>Value</td>
+          </tr>
+        </table>
+      </div>
     </section>
     <section>
       <h3>Customer Attributes</h3>
-      <div id="ca-data"></div>
+      <div>
+        <table id="ca-data">
+          <tr>
+            <td>Attribute</td>
+            <td>Value</td>
+          </tr>
+        </table>
+      </div>
     </section>
     <section>
       <h3>PAS Evergreen Data</h3>
-      <div id="pas-data"></div>
+      <div>
+        <table id="pas-data">
+          <tr>
+            <td>Attribute</td>
+            <td>Value</td>
+          </tr>
+        </table>
+      </div>
     </section>
     <section>
       <h3>Tealium Badges</h3>
-      <div id="tealium-data"></div>
+      <div>
+        <table id="tealium-data">
+          <tr>
+            <td>Badge ID</td>
+          </tr>
+        </table>
+      </div>
     </section>
     <section>
       <h3>Optmizely Experiments</h3>
-      <div id="optly-data"></div>
+      <div>
+        <table id="optly-data">
+          <tr>
+            <td>Campaign</td>
+            <td>Experiment</td>
+            <td>Variation</td>
+          </tr>
+        </table>
+      </div>
     </section>
   </body>
 </html>
