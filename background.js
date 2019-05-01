@@ -1,14 +1,4 @@
-console.log('running background');
-/*chrome.runtime.onMessage.addListener(function (msg, sender) {
-  console.log(msg);
-  // First, validate the message's structure
-  if ((msg.from === 'content') && (msg.subject === 'showPageAction')) {
-    // Enable the page-action for the requesting tab
-    chrome.pageAction.show(sender.tab.id);
-  }
-});*/
-
-//New thing
+// Pass data to content script
 window.teal = ''; window.pas =''; window.ecomid=''; window.customerAttributes=''; window.optly='';
 chrome.runtime.onMessage.addListener(fromcontentscrpt);
 function fromcontentscrpt(req, sender, sendResponse){
@@ -20,13 +10,14 @@ function fromcontentscrpt(req, sender, sendResponse){
   console.log('pas'+pas);
 }
 
+// Get Optmizely network call
 chrome.webRequest.onSendHeaders.addListener(function (details) {
   const urlParams = new URLSearchParams(details.url);
+  // Get l1 query parameter
   const myParams = urlParams.get("l1");
+  // Split comma delimited string to get campaigns
   const myParamsArr = myParams.split(",");
+  // Pass array of campaigns to window
   window.optly = myParamsArr;
-  // split myParams into expiriment names
-  // pass to window obj
 }, {urls : ["*://securemetrics.gap.com/*"]});
 
-// chrome.browserAction.disable(tabId)

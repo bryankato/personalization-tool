@@ -10,13 +10,13 @@ function runPromiseInSequence(arr, input) {
     Promise.resolve(input)
   );
 }
-function p1(inp) {
+function getLocalStorage(inp) {
    return new Promise((resolve, reject) => {
      // return resolve(JSON.parse(window.localStorage.tealium_va));
      return resolve(JSON.parse(window.localStorage.tealium_va).badges);
   });
 }
-function p2(inp) {
+function getPAS(inp) {
   return new Promise((resolve, reject) => {
     finalResultData['Tealium'] = inp;
       // cookie
@@ -87,7 +87,7 @@ function p2(inp) {
     request.send();
   });
 }
-function f1(){
+function createMessage(){
   let message = {
     teal:'',
     pas:'',
@@ -150,7 +150,7 @@ function listAllProperties(o) {
 //new way
 
 window.addEventListener('load', function() {
-  var promiseArr = [p1, p2, f1];
+  var promiseArr = [getLocalStorage, getPAS, createMessage];
   //setTimeout(function(){
     runPromiseInSequence(promiseArr, tealium_obj).then();
   //},5000);
