@@ -40,24 +40,35 @@
 // Function to create tables based on array input
 function createTable(id,arr){
   var table = document.createElement('table');
-  table.setAttribute('border','1');
-  table.setAttribute('cellpadding','3');
-  table.style.borderCollapse = 'collapse';
   for (var i = 0; i < arr.length; i++){
     var tr = document.createElement('tr');
     var td1 = document.createElement('td');
     var td2 = document.createElement('td');
+    var td3 = document.createElement('td');
     var text1 ='';
     var text2 ='';
-    if(id == 'PASdata'){
+    var text3 ='';
+    if(id == 'pas-data'){
       text1 = document.createTextNode(arr[i].AttributeName);
       text2 = document.createTextNode(arr[i].AttributeValue);
-    } else if(id == 'ecomidData'){
+    } else if(id == 'ecomid-data'){
       text1 = document.createTextNode('Ecomm Id');
       text2 = document.createTextNode(arr[i]);
-    } else if(id == 'CAdata'){
+    } else if(id == 'ca-data'){
       text1 = document.createTextNode(arr[i][0]);
       text2 = document.createTextNode(arr[i][1]);
+    } else if(id == 'optly-data'){
+      var arrSplit = arr[i].split(":");
+      text1 = document.createTextNode(arrSplit[0]);
+      // Check for experiment
+      if (arrSplit.length > 2) {
+        text2 = document.createTextNode(arrSplit[1]);
+        text3 = document.createTextNode(arrSplit[2]);
+      // If no experiment vallue, print variation
+      } else {
+        text2 = document.createTextNode("n/a");
+        text3 = document.createTextNode(arrSplit[1]);
+      }
     } else {
       text1 = document.createTextNode(arr[i]);
     }
@@ -67,7 +78,12 @@ function createTable(id,arr){
     if (text2 != "") {
       td2.appendChild(text2);
       tr.appendChild(td2);
-    };
+    }
+    // if text 3 doesn't exist don't append td3
+    if (text3 != "") {
+      td3.appendChild(text3);
+      tr.appendChild(td3);
+    }
     table.appendChild(tr);
   }
   var parent = document.getElementById(id);
@@ -92,19 +108,19 @@ function setup(){
   console.log(optly);
   // Generate tables with data
   if(tealBadgeIDArr.length > 0 && tealBadgeIDArr !== ''){
-    createTable('Tealiumdata',tealBadgeIDArr);
+    createTable('tealium-data',tealBadgeIDArr);
   }
   if(pasArr.length > 0 && pasArr !== ''){
-    createTable('PASdata',pasArr);
+    createTable('pas-data',pasArr);
   }
   if(customerAttributes.length > 0 && tealBadgeIDArr !== ''){
-    createTable('CAdata',customerAttributes);
+    createTable('ca-data',customerAttributes);
   }
   if(ecomid !== ''){
-    createTable('ecomidData',ecomid);
+    createTable('ecomid-data',ecomid);
   }
   if(optly !== ''){
-    createTable('optlyData',optly);
+    createTable('optly-data',optly);
   }
 }
 

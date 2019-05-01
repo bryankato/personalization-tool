@@ -23,8 +23,10 @@ function fromcontentscrpt(req, sender, sendResponse){
 chrome.webRequest.onSendHeaders.addListener(function (details) {
   const urlParams = new URLSearchParams(details.url);
   const myParams = urlParams.get("l1");
-  const myParamsArr = myParams.split(":");
+  const myParamsArr = myParams.split(",");
   window.optly = myParamsArr;
   // split myParams into expiriment names
   // pass to window obj
 }, {urls : ["*://securemetrics.gap.com/*"]});
+
+// chrome.browserAction.disable(tabId)

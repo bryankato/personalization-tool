@@ -2,30 +2,83 @@
 <html>
   <head>
     <script type="text/javascript" src="popup.js"></script>
+    <style>
+      body {
+        width: 500px;
+        margin: 0px;
+        padding: 0 10px;
+      }
+      section {
+        padding: 10px 0;
+        border-bottom: 1px #eee dotted;
+      }
+      table {
+        cellpadding: 0;
+        cellspacing: 0;
+        border: 1px solid #eee;
+        border-collapse: collapse;
+      }
+      tr:nth-child(odd) {
+        background-color: #efefef;
+      }
+      tr:nth-child(even) {
+        background-color: #fff;
+      }
+      td {
+        border: 1px solid #eee;
+        padding: 3px 10px;
+        word-break: break-word;
+      }
+      /* Typography */
+      h2 {
+        color: #333333;
+        font-family: Helvetica, Arial, San-Serif;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 20px;
+        margin: 0;
+        text-align: center;
+      }
+      h3 {
+        color: #333333;
+        font-family: Helvetica, Arial, San-Serif;
+        font-size: 12px;
+        font-weight: bold;
+        margin: 0 0 10px 0;
+        line-height: 18px;
+      }
+      td {
+        color: #333333;
+        font-family: Helvetica, Arial, San-Serif;
+        font-size: 11px;
+        font-weight: normal;
+        line-height: 15px;
+      }
+    </style>
   </head>
-  <body style="width:auto;">
-    <h3 style="font-weight:bold; text-align:center;">User Profile Details</h3>
-    <br/>
-    <h3>Personalization Data</h3>
-    <div>
+  <body>
+    <section>
+      <h2>User Profile Details</h2>
+    </section>
+    <section>
       <h3>Customer ID</h3>
-      <div id="ecomidData"></div>
-    </div>
-    <div>
+      <div id="ecomid-data"></div>
+    </section>
+    <section>
       <h3>Customer Attributes</h3>
-      <div id="CAdata"></div>
-    </div>
-    <div>
-      <h3>Evergreen Data</h3>
-      <div id="PASdata"></div>
-    </div>
-    <div>
-      <h3>Tealium Badge ID's</h3>
-      <div id="Tealiumdata"></div>
-    </div>
-    <div>
-      <h3>Optmizely Expirements</h3>
-      <div id="optlyData"></div>
-    </div>
+      <div id="ca-data"></div>
+    </section>
+    <section>
+      <h3>PAS Evergreen Data</h3>
+      <div id="pas-data"></div>
+    </section>
+    <section>
+      <h3>Tealium Badges</h3>
+      <div id="tealium-data"></div>
+    </section>
+    <section>
+      <h3>Optmizely Experiments</h3>
+      <div id="optly-data"></div>
+    </section>
   </body>
 </html>
