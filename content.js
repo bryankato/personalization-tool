@@ -1,4 +1,3 @@
-//window.onload(function(){
 var tealium_obj = {};
 var pas_obj = {};
 var finalResultData = {};
@@ -11,69 +10,69 @@ function runPromiseInSequence(arr, input) {
   );
 }
 function getLocalStorage(inp) {
-   return new Promise((resolve, reject) => {
-     // return resolve(JSON.parse(window.localStorage.tealium_va));
-     return resolve(JSON.parse(window.localStorage.tealium_va).badges);
+  return new Promise((resolve, reject) => {
+    // Get Tealium badges
+    return resolve(JSON.parse(window.localStorage.tealium_va).badges);
   });
 }
 function getPAS(inp) {
   return new Promise((resolve, reject) => {
     finalResultData['Tealium'] = inp;
-      // cookie
-      function getCookieValue(a) {
-        var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
-        return b ? b.pop() : '';
+    // cookie
+    function getCookieValue(a) {
+      var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+      return b ? b.pop() : '';
+    }
+    //unknownShopperId
+    var unknownShopperId = getCookieValue('unknownShopperId');
+    var lochref = location.href;
+    var hrefArr =[];
+    var siteUrl = '';
+    var forceDI = [];
+    var newurl ='';
+    if (unknownShopperId.indexOf('|') > -1) {
+      unknownShopperId = unknownShopperId.split('|')[0];
+    }
+    // Create domain for PAS call
+    if (lochref.indexOf('www.gap.com') > -1) {
+      siteUrl = 'https://www.gap.com/';
+    } else if (lochref.indexOf('bananarepublic.gap.com') > -1) {
+      siteUrl = 'https://bananarepublic.gap.com/';
+    } else if (lochref.indexOf('oldnavy.gap.com') > -1) {
+      siteUrl = 'https://oldnavy.gap.com/';
+    } else if (lochref.indexOf('athleta.gap.com') > -1) {
+      siteUrl = 'https://athleta.gap.com/';
+    }
+    // Check for DI value
+    if (lochref.indexOf('DI=') > -1) {
+      hrefArr = lochref.split('DI=');
+      if (hrefArr.length > 1) {
+        forceDI = hrefArr[1].split('&');
+        newurl = siteUrl+'resources/personalization/v1/'+unknownShopperId+'?originPath=/&mdsId='+forceDI[0]+'&referrer=';
       }
-      //unknownShopperId
-      var unknownShopperId = getCookieValue('unknownShopperId');
-      var lochref = location.href;
-      var hrefArr =[];
-      var siteUrl = '';
-      var forceDI = [];
-      var newurl ='';
-      if(unknownShopperId.indexOf('|') > -1){
-        unknownShopperId = unknownShopperId.split('|')[0];
-      }
-      // Create domain for PAS call
-      if(lochref.indexOf('www.gap.com') > -1){
-        siteUrl = 'https://www.gap.com/';
-      } else if(lochref.indexOf('bananarepublic.gap.com') > -1){
-        siteUrl = 'https://bananarepublic.gap.com/';
-      } else if(lochref.indexOf('oldnavy.gap.com') > -1){
-        siteUrl = 'https://oldnavy.gap.com/';
-      } else if(lochref.indexOf('athleta.gap.com') > -1){
-        siteUrl = 'https://athleta.gap.com/';
-      }
-      // Check for DI value
-      if(lochref.indexOf('DI=') > -1){
-        hrefArr = lochref.split('DI=');
-        if(hrefArr.length > 1){
-          forceDI = hrefArr[1].split('&');
-          newurl = siteUrl+'resources/personalization/v1/'+unknownShopperId+'?originPath=/&mdsId='+forceDI[0]+'&referrer=';
+    } else {
+      var newurl = siteUrl+'resources/personalization/v1/'+unknownShopperId+'?originPath=/';
+    }
+    // PAS call
+    var request = new XMLHttpRequest();
+    request.open('GET', newurl, true);
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400) {
+        // Success!
+        var data = JSON.parse(request.responseText);
+        console.log(data);
+        if (typeof data.personalizationInfoV1 !== 'undefined' && typeof data.personalizationInfoV1.customerId !=='undefined') {
+          finalResultData['ecomid'] = data.personalizationInfoV1.customerId;
         }
-      } else {
-        var newurl = siteUrl+'resources/personalization/v1/'+unknownShopperId+'?originPath=/';
-      }
-      // PAS call
-      var request = new XMLHttpRequest();
-      request.open('GET', newurl, true);
-      request.onload = function() {
-        if (request.status >= 200 && request.status < 400) {
-          // Success!
-          var data = JSON.parse(request.responseText);
-          console.log(data);
-          if(typeof data.personalizationInfoV1 !== 'undefined' && typeof data.personalizationInfoV1.customerId !=='undefined'){
-            finalResultData['ecomid'] = data.personalizationInfoV1.customerId;
-          }
-          if(typeof data.personalizationInfoV1 !== 'undefined' && typeof data.personalizationInfoV1.customerAttributes !=='undefined'){
-            finalResultData['CAData'] = data.personalizationInfoV1.customerAttributes;
-          }
-          if(typeof data.personalizationInfoV1 !== 'undefined' && data.personalizationInfoV1.featureSelections !== null && typeof data.personalizationInfoV1.featureSelections !== 'undefined' && typeof data.personalizationInfoV1.featureSelections.Evergreens !=='undefined' && data.personalizationInfoV1.featureSelections.Evergreens !==null){
-            var pasObj = data.personalizationInfoV1.featureSelections.Evergreens;
-            finalResultData['PAS'] = pasObj;
-            return resolve(request);
-          }
-          else {
+        if (typeof data.personalizationInfoV1 !== 'undefined' && typeof data.personalizationInfoV1.customerAttributes !=='undefined') {
+          finalResultData['CAData'] = data.personalizationInfoV1.customerAttributes;
+        }
+        if (typeof data.personalizationInfoV1 !== 'undefined' && data.personalizationInfoV1.featureSelections !== null && typeof data.personalizationInfoV1.featureSelections !== 'undefined' && typeof data.personalizationInfoV1.featureSelections.Evergreens !=='undefined' && data.personalizationInfoV1.featureSelections.Evergreens !==null) {
+          var pasObj = data.personalizationInfoV1.featureSelections.Evergreens;
+          finalResultData['PAS'] = pasObj;
+          return resolve(request);
+        }
+        else {
           finalResultData['PAS'] = '';
           return resolve(request);
         }
@@ -87,7 +86,7 @@ function getPAS(inp) {
     request.send();
   });
 }
-function createMessage(){
+function createMessage() {
   let message = {
     teal:'',
     pas:'',
@@ -95,32 +94,30 @@ function createMessage(){
     CAData:''
   }
   //for ecomid
-  if(finalResultData["ecomid"] !== null && typeof finalResultData["ecomid"] !== "undefined" && finalResultData["ecomid"] !== ""){
+  if (finalResultData["ecomid"] !== null && typeof finalResultData["ecomid"] !== "undefined" && finalResultData["ecomid"] !== "") {
     message.ecomid = jsonObjectToArray(finalResultData["ecomid"]);
   }
   //for customerAttributes
-  if(finalResultData["CAData"] !== null && typeof finalResultData["CAData"] !== "undefined" && finalResultData["CAData"] !== ""){
+  if (finalResultData["CAData"] !== null && typeof finalResultData["CAData"] !== "undefined" && finalResultData["CAData"] !== "") {
     var result = Object.entries(finalResultData["CAData"])
     message.CAData = result;
   }
   //for pas
-  if(finalResultData["PAS"] !== null && typeof finalResultData["PAS"] !== "undefined" && finalResultData["PAS"] !== ""){
+  if (finalResultData["PAS"] !== null && typeof finalResultData["PAS"] !== "undefined" && finalResultData["PAS"] !== "") {
     console.log('finalResultData["PAS"]');
     console.log(finalResultData["PAS"]);
     message.pas = finalResultData["PAS"];
   }
   //for tealium
-  if(typeof finalResultData["Tealium"] !== "undefined" && finalResultData["Tealium"] !== ""){
-    //if (typeof finalResultData['Tealium'].badges !== "undefined" ){
-      var tealiumObj = finalResultData['Tealium'];
-      tealiumBadgeArr = listAllProperties(tealiumObj);
-      console.log('finalResultData["teal"]');
-      console.log(tealiumBadgeArr);
-      if(tealiumBadgeArr.length > 0){
-        message.teal = tealiumBadgeArr;
-        chrome.runtime.sendMessage(message);
-      }
-    //}
+  if (typeof finalResultData["Tealium"] !== "undefined" && finalResultData["Tealium"] !== "") {
+    var tealiumObj = finalResultData['Tealium'];
+    tealiumBadgeArr = listAllProperties(tealiumObj);
+    console.log('finalResultData["teal"]');
+    console.log(tealiumBadgeArr);
+    if (tealiumBadgeArr.length > 0) {
+      message.teal = tealiumBadgeArr;
+      chrome.runtime.sendMessage(message);
+    }
   }
 }
 //Function to check if element is json array
@@ -128,11 +125,11 @@ function isJsonArray(element) {
   return Object.prototype.toString.call(element).trim() == '[object Array]';
 }
 //Function to convert json object to json array if it's otherwise it will just return it.
-function jsonObjectToArray(element){
+function jsonObjectToArray(element) {
   var jsonArray = [];
-  if(!isJsonArray(element) && element !== undefined && element !== ""){
+  if (!isJsonArray(element) && element !== undefined && element !== "") {
     jsonArray.push(element);
-  }else {
+  } else {
     jsonArray = element;
   }
   return jsonArray;
@@ -141,17 +138,13 @@ function jsonObjectToArray(element){
 function listAllProperties(o) {
   var objectToInspect;
   var badgeIds = [];
-  for(objectToInspect = o; objectToInspect !== null; objectToInspect = Object.getPrototypeOf(objectToInspect)) {
-      badgeIds = badgeIds.concat(Object.keys(objectToInspect));
+  for (objectToInspect = o; objectToInspect !== null; objectToInspect = Object.getPrototypeOf(objectToInspect)) {
+    badgeIds = badgeIds.concat(Object.keys(objectToInspect));
   }
   return badgeIds;
 }
 
-//new way
-
 window.addEventListener('load', function() {
   var promiseArr = [getLocalStorage, getPAS, createMessage];
-  //setTimeout(function(){
-    runPromiseInSequence(promiseArr, tealium_obj).then();
-  //},5000);
+  runPromiseInSequence(promiseArr, tealium_obj).then();
 })
