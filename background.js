@@ -2,6 +2,7 @@
 window.teal = ''; window.pas =''; window.ecomid=''; window.customerAttributes=''; window.optly='';
 chrome.runtime.onMessage.addListener(fromcontentscrpt);
 function fromcontentscrpt(req, sender, sendResponse){
+  window.diValue = req.diValue;
   window.teal = req.teal;
   window.pas = req.pas;
   window.ecomid = req.ecomid;
@@ -20,4 +21,3 @@ chrome.webRequest.onSendHeaders.addListener(function (details) {
   // Pass array of campaigns to window
   window.optly = myParamsArr;
 }, {urls : ["*://securemetrics.gap.com/*"]});
-

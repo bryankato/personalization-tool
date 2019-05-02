@@ -1,16 +1,23 @@
 // Function to create tables based on array input
 function fillTable(id,arr) {
+  // console.log("preArray check : " + arr);
   var table = document.getElementById(id);
+  if (!Array.isArray(arr)) {
+    arr = [arr];
+  }
+  // console.log("postArray check : " + arr);
   for (var i = 0; i < arr.length; i++) {
     var row = table.insertRow(i+1);
     var text1 ='';
     var text2 ='';
     var text3 ='';
+    var ecomDataText = ["Ecomm ID",
+                        "DI Value"]
     if (id == 'pas-data') {
       text1 = arr[i].AttributeName;
       text2 = arr[i].AttributeValue;
     } else if (id == 'ecomid-data') {
-      text1 = 'Ecomm Id';
+      text1 = ecomDataText[i];
       text2 = arr[i];
     } else if (id == 'ca-data') {
       text1 = arr[i][0];
@@ -51,27 +58,37 @@ function createProfile() {
   // Get values from window
   let tealBadgeID = chrome.extension.getBackgroundPage();
   // Assign obj to new vars
+  let ecomid = "";
   let tealBadgeIDArr = tealBadgeID.teal;
   let pasArr = tealBadgeID.pas;
   let customerAttributes = tealBadgeID.customerAttributes;
-  let ecomid = tealBadgeID.ecomid;
+  if (tealBadgeID.ecomid != "") {
+    ecomid = tealBadgeID.ecomid;
+  } else {
+    ecomid = ["n/a"];
+  }
+  let diValue = tealBadgeID.diValue;
   let optly = tealBadgeID.optly;
   console.log(pasArr);
   console.log(tealBadgeIDArr);
   console.log(customerAttributes);
   console.log(ecomid);
+  console.log(diValue)
   console.log(optly);
   // Generate tables with data
-  if (tealBadgeIDArr.length > 0 && tealBadgeIDArr !== '') {
+  if (tealBadgeIDArr !== '') {
     fillTable('tealium-data',tealBadgeIDArr);
   }
-  if (pasArr.length > 0 && pasArr !== '') {
+  if (pasArr !== '') {
     fillTable('pas-data',pasArr);
   }
-  if (customerAttributes.length > 0 && tealBadgeIDArr !== '') {
+  if (tealBadgeIDArr !== '') {
     fillTable('ca-data',customerAttributes);
   }
   if (ecomid !== '') {
+    if (diValue !== '') {
+      ecomid.push(diValue);
+    }
     fillTable('ecomid-data',ecomid);
   }
   if (optly !== '') {

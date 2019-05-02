@@ -86,13 +86,25 @@ function getPAS(inp) {
     request.send();
   });
 }
+
+function getDiValue() {
+  var pageUrl = window.location.search;
+  let urlParams = new URLSearchParams(pageUrl);
+  let diValue = urlParams.get("DI");
+  return diValue;
+}
+
 function createMessage() {
   let message = {
+    diValue:'',
     teal:'',
     pas:'',
     ecomid:'',
     CAData:''
   }
+  //for DI value
+  var diValue = getDiValue();
+  message.diValue = diValue;
   //for ecomid
   if (finalResultData["ecomid"] !== null && typeof finalResultData["ecomid"] !== "undefined" && finalResultData["ecomid"] !== "") {
     message.ecomid = jsonObjectToArray(finalResultData["ecomid"]);
