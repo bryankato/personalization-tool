@@ -1,21 +1,21 @@
 // Function to create tables based on array input
-function fillTable(id,arr){
+function fillTable(id,arr) {
   var table = document.getElementById(id);
-  for (var i = 0; i < arr.length; i++){
+  for (var i = 0; i < arr.length; i++) {
     var row = table.insertRow(i+1);
     var text1 ='';
     var text2 ='';
     var text3 ='';
-    if(id == 'pas-data'){
+    if (id == 'pas-data') {
       text1 = arr[i].AttributeName;
       text2 = arr[i].AttributeValue;
-    } else if(id == 'ecomid-data'){
+    } else if (id == 'ecomid-data') {
       text1 = 'Ecomm Id';
       text2 = arr[i];
-    } else if(id == 'ca-data'){
+    } else if (id == 'ca-data') {
       text1 = arr[i][0];
       text2 = arr[i][1];
-    } else if(id == 'optly-data'){
+    } else if (id == 'optly-data') {
       var arrSplit = arr[i].split(":");
       text1 = arrSplit[0];
       // Check for experiment
@@ -46,7 +46,7 @@ function fillTable(id,arr){
 }
 
 // Gets data from window and calls table generating function
-function createProfile(){
+function createProfile() {
   debugger;
   // Get values from window
   let tealBadgeID = chrome.extension.getBackgroundPage();
@@ -62,19 +62,19 @@ function createProfile(){
   console.log(ecomid);
   console.log(optly);
   // Generate tables with data
-  if(tealBadgeIDArr.length > 0 && tealBadgeIDArr !== ''){
+  if (tealBadgeIDArr.length > 0 && tealBadgeIDArr !== '') {
     fillTable('tealium-data',tealBadgeIDArr);
   }
-  if(pasArr.length > 0 && pasArr !== ''){
+  if (pasArr.length > 0 && pasArr !== '') {
     fillTable('pas-data',pasArr);
   }
-  if(customerAttributes.length > 0 && tealBadgeIDArr !== ''){
+  if (customerAttributes.length > 0 && tealBadgeIDArr !== '') {
     fillTable('ca-data',customerAttributes);
   }
-  if(ecomid !== ''){
+  if (ecomid !== '') {
     fillTable('ecomid-data',ecomid);
   }
-  if(optly !== ''){
+  if (optly !== '') {
     fillTable('optly-data',optly);
   }
 }

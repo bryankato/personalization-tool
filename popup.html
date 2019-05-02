@@ -27,6 +27,9 @@
       tr:nth-child(1) > td {
         font-weight: bold;
       }
+      tr.header > td {
+        word-break: normal;
+      }
       td {
         border: 1px solid #eee;
         padding: 3px 10px;
@@ -67,7 +70,7 @@
       <h3>Customer ID</h3>
       <div>
         <table id="ecomid-data">
-          <tr>
+          <tr class="header">
             <td>ID Type</td>
             <td>Value</td>
           </tr>
@@ -78,7 +81,7 @@
       <h3>Customer Attributes</h3>
       <div>
         <table id="ca-data">
-          <tr>
+          <tr class="header">
             <td>Attribute</td>
             <td>Value</td>
           </tr>
@@ -89,7 +92,7 @@
       <h3>PAS Evergreen Data</h3>
       <div>
         <table id="pas-data">
-          <tr>
+          <tr class="header">
             <td>Attribute</td>
             <td>Value</td>
           </tr>
@@ -100,7 +103,7 @@
       <h3>Tealium Badges</h3>
       <div>
         <table id="tealium-data">
-          <tr>
+          <tr class="header">
             <td>Badge ID</td>
           </tr>
         </table>
@@ -110,7 +113,7 @@
       <h3>Optmizely Experiments</h3>
       <div>
         <table id="optly-data">
-          <tr>
+          <tr class="header">
             <td>Campaign</td>
             <td>Experiment</td>
             <td>Variation</td>
