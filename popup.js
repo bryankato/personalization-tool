@@ -86,7 +86,7 @@ function createProfile() {
     fillTable('ca-data',customerAttributes);
   }
   if (ecomid !== '') {
-    if (diValue !== '') {
+    if (diValue !== null) {
       ecomid.push(diValue);
     }
     fillTable('ecomid-data',ecomid);
