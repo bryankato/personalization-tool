@@ -12,7 +12,10 @@ function runPromiseInSequence(arr, input) {
 function getLocalStorage(inp) {
   return new Promise((resolve, reject) => {
     // Get Tealium badges
-    return resolve(JSON.parse(window.localStorage.tealium_va).badges);
+    let tealiumObj = window.localStorage.tealium_va
+    if (typeof tealiumObj !== "undefined") {
+      return resolve(JSON.parse(tealiumObj).badges);
+    }
   });
 }
 function getPAS(inp) {
