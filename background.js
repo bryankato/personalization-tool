@@ -1,6 +1,8 @@
 // Pass data to content script
-chrome.runtime.onMessage.addListener(fromcontentscrpt);
-  // initialize window
+chrome.runtime.onMessage.addListener(fromContentScript);
+
+function fromContentScript(req, sender, sendResponse){
+    // initialize window
   window.customerAttributes='';
   window.diValue ='';
   window.ecomid='';
@@ -8,7 +10,6 @@ chrome.runtime.onMessage.addListener(fromcontentscrpt);
   window.pas ='';
   window.teal = '';
 
-function fromcontentscrpt(req, sender, sendResponse){
   window.customerAttributes = req.CAData;
   window.diValue = req.diValue;
   window.ecomid = req.ecomid;
