@@ -15,8 +15,8 @@ function fromContentScript(req, sender, sendResponse){
   window.ecomid = req.ecomid;
   window.pas = req.pas;
   window.teal = req.teal;
-  console.log('teal'+teal);
-  console.log('pas'+pas);
+  console.log('Tealium : ' + teal);
+  console.log('PAS : ' + pas);
 }
 
 // Get Optmizely network call
