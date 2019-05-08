@@ -1,12 +1,19 @@
 // Pass data to content script
-window.teal = ''; window.pas =''; window.ecomid=''; window.customerAttributes=''; window.optly='';
 chrome.runtime.onMessage.addListener(fromcontentscrpt);
+  // initialize window
+  window.customerAttributes='';
+  window.diValue ='';
+  window.ecomid='';
+  window.optly='';
+  window.pas ='';
+  window.teal = '';
+
 function fromcontentscrpt(req, sender, sendResponse){
-  window.diValue = req.diValue;
-  window.teal = req.teal;
-  window.pas = req.pas;
-  window.ecomid = req.ecomid;
   window.customerAttributes = req.CAData;
+  window.diValue = req.diValue;
+  window.ecomid = req.ecomid;
+  window.pas = req.pas;
+  window.teal = req.teal;
   console.log('teal'+teal);
   console.log('pas'+pas);
 }

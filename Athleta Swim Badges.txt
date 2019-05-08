@@ -1,0 +1,70 @@
+Athleta Swim Badges
+
+content_id_link:
+Start_Quiz_Now
+
+Query Params
+swimwearcoverage equal
+CORE
+COVER
+REVEALING
+
+
+underwire=
+yes
+no
+
+swimwearpattern=
+print
+solid
+
+TiQ Vars (only showing on lib-marketing, not on main)
+- at_swimwearcoverage
+- at_swimwearpattern
+- at_underwire
+
+222949 - AT - Customer - Swimsuit - Preference - Coverage - Core
+222951 - AT - Customer - Swimsuit - Preference - Coverage - Bottom
+222953 - AT - Customer - Swimsuit - Preference - Coverage - Revealing
+222955 - AT - Customer - Swimsuit - Preference - Underwire - Yes
+222957 - AT - Customer - Swimsuit - Preference - Underwire - No
+222959 - AT - Customer - Swimsuit - Preference - Pattern - Print
+222961 - AT - Customer - Swimsuit - Preference - Pattern - Solid
+
+
+BRONGA - PLACEHOLDER Segmentation Cookie - 1
+
+Segmentation Cookie
+
+222963 - BRONGA - PLACEHOLDER Segmentation Cookie - 1
+222965 - BRONGA - PLACEHOLDER Segmentation Cookie - 2
+222967 - BRONGA - PLACEHOLDER Segmentation Cookie - 3
+222969 - BRONGA - PLACEHOLDER Segmentation Cookie - 4
+222971 - BRONGA - PLACEHOLDER Segmentation Cookie - 5
+
+BRONGA - PLACEHOLDER Segmentation Cookie - 1
+BRONGA - PLACEHOLDER Segmentation Cookie - 2
+BRONGA - PLACEHOLDER Segmentation Cookie - 3
+BRONGA - PLACEHOLDER Segmentation Cookie - 4
+BRONGA - PLACEHOLDER Segmentation Cookie - 5
+
+
+AT - Customer - Swimsuit - Preference - Coverage - Core
+AT - Customer - Swimsuit - Preference - Coverage - Bottom
+AT - Customer - Swimsuit - Preference - Coverage - Revealing
+AT - Customer - Swimsuit - Preference - Underwire - Yes
+AT - Customer - Swimsuit - Preference - Underwire - No
+AT - Customer - Swimsuit - Preference - Pattern - Print
+AT - Customer - Swimsuit - Preference - Pattern - Solid
+
+222949
+222951
+222953
+222955
+222957
+222959
+222961
+
+$50-70 DI=1
+$75-100 DI=3
+$100+ DI=4
