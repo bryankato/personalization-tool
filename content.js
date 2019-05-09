@@ -3,18 +3,49 @@ var pas_obj = {};
 var finalResultData = {};
 var tealiumBadgeArr =[];
 
+// Polling function
+function poll(fn, timeout, interval) {
+  var endTime = Number(new Date()) + (timeout || 2000);
+  interval = interval || 100;
+  var checkCondition = function(resolve, reject) {
+    // If the condition is met, we're done!
+    var result = fn();
+    if(result) {
+      resolve(result);
+    }
+    // If the condition isn't met but the timeout hasn't elapsed, go again
+    else if (Number(new Date()) < endTime) {
+      setTimeout(checkCondition, interval, resolve, reject);
+    }
+    // Didn't match and too much time, reject!
+    else {
+      reject(new Error('timed out for ' + fn + ': ' + arguments));
+    }
+  };
+  return new Promise(checkCondition);
+}
+// Run array of promises and combine them into an object
 function runPromiseInSequence(arr, input) {
   return arr.reduce(
     (promiseChain, currentFunction) => promiseChain.then(currentFunction),
     Promise.resolve(input)
   );
 }
+// Get data from Tealium localStorage object
 function getLocalStorage(inp) {
   return new Promise((resolve, reject) => {
     // Get Tealium badges
     let tealiumObj = window.localStorage.tealium_va
+    // tealium is loading too slow
     if (typeof tealiumObj !== "undefined") {
-      return resolve(JSON.parse(tealiumObj).badges);
+      poll(function() {
+        return resolve(JSON.parse(tealiumObj).badges);
+      }).then(function() {
+        // Polling done, now do something else!
+      }).catch(function() {
+        // Polling timed out, handle the error!
+        console.log("tealium_va timed out")
+      });
     }
   });
 }
@@ -119,16 +150,12 @@ function createMessage() {
   }
   //for pas
   if (finalResultData["PAS"] !== null && typeof finalResultData["PAS"] !== "undefined" && finalResultData["PAS"] !== "") {
-    console.log('finalResultData["PAS"]');
-    console.log(finalResultData["PAS"]);
     message.pas = finalResultData["PAS"];
   }
   //for tealium
   if (typeof finalResultData["Tealium"] !== "undefined" && finalResultData["Tealium"] !== "") {
     var tealiumObj = finalResultData['Tealium'];
     tealiumBadgeArr = listAllProperties(tealiumObj);
-    console.log('finalResultData["teal"]');
-    console.log(tealiumBadgeArr);
     if (tealiumBadgeArr.length > 0) {
       message.teal = tealiumBadgeArr;
       chrome.runtime.sendMessage(message);
