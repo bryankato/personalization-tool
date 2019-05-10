@@ -4,7 +4,6 @@ window.diValue ='';
 window.ecomid='';
 window.optly='';
 window.pas ='';
-window.tabId = '';
 window.teal = '';
 
 // Get Optmizely call
@@ -27,9 +26,9 @@ function getContentScriptData(req, sender, sendResponse){
   window.ecomid = req.ecomid;
   window.pas = req.pas;
   window.teal = req.teal;
-  console.log('Tealium : ' + window.teal);
-  console.log('PAS : ' + window.pas);
-  console.log('Optmizely : ' + window.optly);
+  console.log('Tealium : ' + teal);
+  console.log('PAS : ' + pas);
+  console.log('Optmizely : ' + optly);
 }
 
 // Get data from content script
