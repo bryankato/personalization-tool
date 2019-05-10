@@ -55,20 +55,20 @@ function fillTable(id,arr) {
 // Gets data from window and calls table generating function
 function createProfile() {
   debugger;
-  // Get values from window
-  let tealBadgeID = chrome.extension.getBackgroundPage();
+  // Get values from background page
+  let backgroundData = chrome.extension.getBackgroundPage();
   // Assign obj to new vars
   let ecomid = "";
-  let tealBadgeIDArr = tealBadgeID.teal;
-  let pasArr = tealBadgeID.pas;
-  let customerAttributes = tealBadgeID.customerAttributes;
-  if (tealBadgeID.ecomid != "") {
-    ecomid = tealBadgeID.ecomid;
+  let tealBadgeIDArr = backgroundData.teal;
+  let pasArr = backgroundData.pas;
+  let customerAttributes = backgroundData.customerAttributes;
+  if (backgroundData.ecomid != "") {
+    ecomid = backgroundData.ecomid;
   } else {
     ecomid = ["n/a"];
   }
-  let diValue = tealBadgeID.diValue;
-  let optly = tealBadgeID.optly;
+  let diValue = backgroundData.diValue;
+  let optly = backgroundData.optly;
   console.log(pasArr);
   console.log(tealBadgeIDArr);
   console.log(customerAttributes);

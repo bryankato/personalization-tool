@@ -5,7 +5,7 @@ var tealiumBadgeArr =[];
 
 // Polling function
 function poll(fn, timeout, interval) {
-  var endTime = Number(new Date()) + (timeout || 2000);
+  var endTime = Number(new Date()) + (timeout || 10000);
   interval = interval || 100;
   var checkCondition = function(resolve, reject) {
     // If the condition is met, we're done!
@@ -33,23 +33,26 @@ function runPromiseInSequence(arr, input) {
 }
 // Get data from Tealium localStorage object
 function getLocalStorage(inp) {
+  console.log("getLocalStorage running");
   return new Promise((resolve, reject) => {
-    // Get Tealium badges
-    let tealiumObj = window.localStorage.tealium_va
-    // tealium is loading too slow
-    if (typeof tealiumObj !== "undefined") {
-      poll(function() {
+    // Poll for localstorage
+    poll(function() {
+      // Get Tealium badges
+      let tealiumObj = window.localStorage.tealium_va;
+      if (typeof tealiumObj !== "undefined") {
         return resolve(JSON.parse(tealiumObj).badges);
-      }).then(function() {
-        // Polling done, now do something else!
-      }).catch(function() {
-        // Polling timed out, handle the error!
-        console.log("tealium_va timed out")
-      });
-    }
+      }
+    }).then(function() {
+      console.log("tealium_va loaded");
+      // Polling done
+    }).catch(function() {
+      // Polling timed out
+      console.log("tealium_va timed out")
+    });
   });
 }
 function getPAS(inp) {
+  console.log("getPAS running");
   return new Promise((resolve, reject) => {
     finalResultData['Tealium'] = inp;
     // cookie
@@ -130,6 +133,7 @@ function getDiValue() {
 
 function createMessage() {
   let message = {
+    name:'data',
     diValue:'',
     teal:'',
     pas:'',

@@ -5,14 +5,17 @@
   "permissions": [
     "*://*.gap.com/*",
     "activeTab",
-    "storage",
     "background",
+    "storage",
+    "tabs",
     "webRequest"
   ],
   "content_scripts":[
     {
-      "matches":["*://*.gap.com/*",
-                 "*://*.gapfactory.com/*"],
+      "matches":[
+        "*://*.gap.com/*",
+        "*://*.gapfactory.com/*"
+      ],
       "js":["content.js"]
     }
   ],
